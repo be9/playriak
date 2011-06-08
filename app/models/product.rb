@@ -4,4 +4,6 @@ class Product
   self.bucket_name = 'playriak/product'
 
   property :name, String
+
+  one :curator, class_name: 'User'
 end
