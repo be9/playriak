@@ -1,17 +1,22 @@
 class Worship
   include Ripple::Document
 
-  property :user_id, String
-  property :product_id, String
+  self.bucket_name = 'playriak/worships'
 
   one :user
   one :product
 
-  def key
-    @key ||= "#{user_id}_#{product_id}"
-  end
+  validates :user, :product, :presence => true
+
+  before_create :set_key
 
   def self.for_user_and_product(user, product)
-    find("#{user.id}_#{product.id}")
+    find("#{user.key}-#{product.key}")
+  end
+
+  private
+
+  def set_key
+    self.key = "#{user.key}-#{product.key}"
   end
 end

@@ -33,4 +33,22 @@ namespace :fake do
 
     STDERR.puts
   end
+
+  desc 'Worships'
+  task :worships, [:count] => :environment do |t, args|
+    count = (args[:count] || 1000).to_i
+
+    puts ">>> Loading users and products"
+
+    users = User.all
+    products = Product.all
+
+    puts ">>> Building #{count} worships (.=1)"
+    count.times do
+      Worship.create!(user: users.random, product: products.random)
+      STDERR.print '.'
+    end
+
+    STDERR.puts
+  end
 end

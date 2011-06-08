@@ -1,7 +1,7 @@
 class Product
   include Ripple::Document
 
-  self.bucket_name = 'playriak/product'
+  self.bucket_name = 'playriak/products'
 
   property :name, String
 
