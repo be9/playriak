@@ -19,16 +19,21 @@ namespace :fake do
   task :products, [:count] => :environment do |t, args|
     count = (args[:count] || 1000).to_i
 
-    puts ">>> Building #{count} products (.=1)"
+    puts ">>> Building #{count} products (.=100)"
 
     users = User.all
+
+    done = 0
 
     count.times do
       p = Product.new
       p.name = Forgery::Basic.text
       p.curator = users.random
       p.save!
-      STDERR.print '.'
+
+      done += 1
+
+      STDERR.print '.' if done % 100 == 1
     end
 
     STDERR.puts
